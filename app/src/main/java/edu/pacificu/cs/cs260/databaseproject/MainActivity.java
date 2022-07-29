@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         executor.execute(
                 () -> {
                     noteDao.deleteAll();
-                    MainActivity.this.runOnUiThread(() ->tvDisplay.setText(""));
+                    view.post(() ->tvDisplay.setText(""));
                 });
     }
     public void onClickCreate(View view)
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (Note aNote : notes)
         {
-            MainActivity.this.runOnUiThread(() ->tvDisplay.append(aNote.msg + "\n"));
+            view.post(() ->tvDisplay.append(aNote.msg + "\n"));
         }
                 });
 
