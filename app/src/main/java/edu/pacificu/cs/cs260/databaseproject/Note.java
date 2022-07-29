@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Note {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int nid;
 
     @ColumnInfo(name = "msg")
