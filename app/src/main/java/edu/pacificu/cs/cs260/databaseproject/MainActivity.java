@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.nio.channels.AsynchronousByteChannel;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private NoteDao noteDao;
     private EditText tvEntry;
     private TextView tvDisplay;
+    private ExecutorService executor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         tvEntry = findViewById(R.id.tvEntry);
         tvDisplay = findViewById(R.id.tvDisplay);
+        executor = Executors.newSingleThreadExecutor();
     }
 
     public void onClickCreate(View view)
@@ -43,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         tvDisplay.setText("");
 
-        AsyncTask.execute( () -> {
+        executor.execute(
+        //AsyncTask.execute(
+                () -> {
             noteDao.insertAll(localNote);
         List<Note> notes = noteDao.getAll();
 
