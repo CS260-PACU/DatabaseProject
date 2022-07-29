@@ -13,6 +13,7 @@ import java.nio.channels.AsynchronousByteChannel;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,11 +33,22 @@ public class MainActivity extends AppCompatActivity {
         executor = Executors.newSingleThreadExecutor();
     }
 
+    public void onClickClear(View view)
+    {
+        executor.execute(
+                () -> {
+                    noteDao.deleteAll();
+                    MainActivity.this.runOnUiThread(() ->tvDisplay.setText(""));
+                });
+    }
     public void onClickCreate(View view)
     {
-        db = Room.databaseBuilder(getApplicationContext(),
-                NoteDatabase.class, "note-db").build();
-        noteDao = db.noteDao();
+        executor.execute( () -> {
+                    db = Room.databaseBuilder(getApplicationContext(),
+                            NoteDatabase.class, "note-db").build();
+                    noteDao = db.noteDao();
+        }
+        );
     }
 
     public void onClickAdd(View view)
@@ -44,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         Note localNote = new Note();
 
         localNote.msg = tvEntry.getText().toString();
-
         tvDisplay.setText("");
 
         executor.execute(
@@ -55,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         for (Note aNote : notes)
         {
-            tvDisplay.append(aNote.msg + "\n");
-        } });
+            MainActivity.this.runOnUiThread(() ->tvDisplay.append(aNote.msg + "\n"));
+        }
+                });
 
     }
 }

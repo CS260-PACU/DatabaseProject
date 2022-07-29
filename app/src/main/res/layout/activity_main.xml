@@ -48,12 +48,26 @@
 
     <TextView
         android:id="@+id/tvDisplay"
-        android:layout_width="294dp"
-        android:layout_height="442dp"
+        android:layout_width="282dp"
+        android:layout_height="397dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.899" />
+        app:layout_constraintVertical_bias="0.694" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickClear"
+        android:text="Clear DB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDisplay"
+        app:layout_constraintVertical_bias="0.518" />
 </androidx.constraintlayout.widget.ConstraintLayout>
