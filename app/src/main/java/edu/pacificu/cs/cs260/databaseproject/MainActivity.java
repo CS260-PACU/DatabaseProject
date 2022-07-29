@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         tvEntry = findViewById(R.id.tvEntry);
         tvDisplay = findViewById(R.id.tvDisplay);
         executor = Executors.newSingleThreadExecutor();
+        executor.execute( () -> {
+                    db = Room.databaseBuilder(getApplicationContext(),
+                            NoteDatabase.class, "note-db").build();
+                    noteDao = db.noteDao();
+                }
+        );
     }
 
     public void onClickClear(View view)
@@ -40,17 +46,9 @@ public class MainActivity extends AppCompatActivity {
                     noteDao.deleteAll();
                     view.post(() ->tvDisplay.setText(""));
                 });
-    }
-    public void onClickCreate(View view)
-    {
-        executor.execute( () -> {
-                    db = Room.databaseBuilder(getApplicationContext(),
-                            NoteDatabase.class, "note-db").build();
-                    noteDao = db.noteDao();
-        }
-        );
-    }
 
+
+    }
     public void onClickAdd(View view)
     {
         Note localNote = new Note();
