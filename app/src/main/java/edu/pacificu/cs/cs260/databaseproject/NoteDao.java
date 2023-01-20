@@ -26,4 +26,7 @@ public interface NoteDao {
     void deleteAll();
 
 
+    @Query("SELECT * From note WHERE mParentValue = :noteid")
+    Note findByParentValue(int noteid);
+
 }
